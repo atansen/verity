@@ -1,0 +1,432 @@
+{
+  "_comment": "Built-in ingredient concern database. Each entry uses the normalized lowercase ingredient name as key.",
+  "_schema": "name, score (0-10 EWG-equivalent), concerns (array), description, aliases (array of alternate names)",
+
+  "formaldehyde": {
+    "name": "Formaldehyde",
+    "score": 10,
+    "concerns": ["Cancer", "Allergies & immunotoxicity", "Organ system toxicity"],
+    "description": "Known human carcinogen. Used as a preservative. Released by formaldehyde-releasing preservatives.",
+    "aliases": ["methanal", "formalin"]
+  },
+  "dmdm hydantoin": {
+    "name": "DMDM Hydantoin",
+    "score": 8,
+    "concerns": ["Cancer", "Allergies & immunotoxicity"],
+    "description": "Formaldehyde-releasing preservative. Releases formaldehyde into products over time.",
+    "aliases": []
+  },
+  "quaternium-15": {
+    "name": "Quaternium-15",
+    "score": 8,
+    "concerns": ["Cancer", "Allergies & immunotoxicity"],
+    "description": "Formaldehyde-releasing preservative and known allergen.",
+    "aliases": ["quaternium 15"]
+  },
+  "imidazolidinyl urea": {
+    "name": "Imidazolidinyl Urea",
+    "score": 6,
+    "concerns": ["Cancer", "Allergies & immunotoxicity"],
+    "description": "Formaldehyde-releasing preservative; common skin sensitizer.",
+    "aliases": []
+  },
+  "diazolidinyl urea": {
+    "name": "Diazolidinyl Urea",
+    "score": 6,
+    "concerns": ["Cancer", "Allergies & immunotoxicity"],
+    "description": "Formaldehyde-releasing preservative. Releases more formaldehyde than imidazolidinyl urea.",
+    "aliases": []
+  },
+  "bronopol": {
+    "name": "Bronopol",
+    "score": 6,
+    "concerns": ["Cancer", "Contamination concerns"],
+    "description": "Preservative that can form carcinogenic nitrosamines.",
+    "aliases": ["2-bromo-2-nitropropane-1,3-diol"]
+  },
+  "methylparaben": {
+    "name": "Methylparaben",
+    "score": 4,
+    "concerns": ["Hormonal disruption", "Allergies & immunotoxicity"],
+    "description": "Paraben preservative with weak estrogenic activity.",
+    "aliases": ["methyl paraben", "methyl 4-hydroxybenzoate"]
+  },
+  "propylparaben": {
+    "name": "Propylparaben",
+    "score": 6,
+    "concerns": ["Hormonal disruption", "Developmental & reproductive toxicity"],
+    "description": "Paraben with significant estrogenic activity; restricted in EU for leave-on products.",
+    "aliases": ["propyl paraben", "propyl 4-hydroxybenzoate"]
+  },
+  "butylparaben": {
+    "name": "Butylparaben",
+    "score": 7,
+    "concerns": ["Hormonal disruption", "Developmental & reproductive toxicity"],
+    "description": "Paraben with the strongest estrogenic activity among common parabens.",
+    "aliases": ["butyl paraben", "butyl 4-hydroxybenzoate"]
+  },
+  "ethylparaben": {
+    "name": "Ethylparaben",
+    "score": 3,
+    "concerns": ["Hormonal disruption"],
+    "description": "Mild paraben preservative; generally considered lower risk than butyl/propyl parabens.",
+    "aliases": ["ethyl paraben", "ethyl 4-hydroxybenzoate"]
+  },
+  "isobutylparaben": {
+    "name": "Isobutylparaben",
+    "score": 7,
+    "concerns": ["Hormonal disruption", "Developmental & reproductive toxicity"],
+    "description": "Paraben with high hormonal disruption potential.",
+    "aliases": ["isobutyl paraben"]
+  },
+  "isopropylparaben": {
+    "name": "Isopropylparaben",
+    "score": 7,
+    "concerns": ["Hormonal disruption"],
+    "description": "Paraben with estrogenic activity; banned in some jurisdictions.",
+    "aliases": ["isopropyl paraben"]
+  },
+  "oxybenzone": {
+    "name": "Oxybenzone",
+    "score": 8,
+    "concerns": ["Hormonal disruption", "Allergies & immunotoxicity", "Restricted in other countries"],
+    "description": "UV filter that penetrates skin and accumulates in the body; significant endocrine disruption potential. Banned in Hawaii reef-protection laws.",
+    "aliases": ["benzophenone-3", "bp-3"]
+  },
+  "octinoxate": {
+    "name": "Octinoxate",
+    "score": 6,
+    "concerns": ["Hormonal disruption", "Restricted in other countries"],
+    "description": "UV filter with estrogenic activity. Detected in human blood, urine, and breast milk.",
+    "aliases": ["octyl methoxycinnamate", "ethylhexyl methoxycinnamate"]
+  },
+  "homosalate": {
+    "name": "Homosalate",
+    "score": 4,
+    "concerns": ["Hormonal disruption", "Contamination concerns"],
+    "description": "UV filter that disrupts estrogen, androgen, and progesterone. Accumulates in the body.",
+    "aliases": []
+  },
+  "octisalate": {
+    "name": "Octisalate",
+    "score": 3,
+    "concerns": ["Allergies & immunotoxicity"],
+    "description": "UV filter; moderate allergen potential.",
+    "aliases": ["ethylhexyl salicylate", "octyl salicylate"]
+  },
+  "avobenzone": {
+    "name": "Avobenzone",
+    "score": 2,
+    "concerns": ["Allergies & immunotoxicity"],
+    "description": "UV-A filter; generally considered safe but can be a skin sensitizer.",
+    "aliases": ["butyl methoxydibenzoylmethane"]
+  },
+  "diethyl phthalate": {
+    "name": "Diethyl Phthalate",
+    "score": 3,
+    "concerns": ["Hormonal disruption", "Developmental & reproductive toxicity"],
+    "description": "Phthalate used as a solvent/plasticizer; often hidden under 'fragrance'.",
+    "aliases": ["dep", "phthalic acid diethyl ester"]
+  },
+  "dibutyl phthalate": {
+    "name": "Dibutyl Phthalate",
+    "score": 7,
+    "concerns": ["Hormonal disruption", "Developmental & reproductive toxicity", "Restricted in other countries"],
+    "description": "Phthalate linked to reproductive toxicity. Banned in EU cosmetics.",
+    "aliases": ["dbp"]
+  },
+  "fragrance": {
+    "name": "Fragrance",
+    "score": 5,
+    "concerns": ["Hidden / undisclosed ingredients", "Allergies & immunotoxicity"],
+    "description": "Catch-all term hiding potentially hundreds of undisclosed chemicals including phthalates, musks, and allergens.",
+    "aliases": ["parfum", "perfume", "aroma"]
+  },
+  "triclosan": {
+    "name": "Triclosan",
+    "score": 7,
+    "concerns": ["Hormonal disruption", "Organ system toxicity", "Restricted in other countries"],
+    "description": "Antimicrobial agent banned from soaps in the US (FDA 2017); disrupts thyroid and sex hormones.",
+    "aliases": []
+  },
+  "triclocarban": {
+    "name": "Triclocarban",
+    "score": 7,
+    "concerns": ["Hormonal disruption", "Contamination concerns", "Restricted in other countries"],
+    "description": "Antimicrobial banned from rinse-off soaps (FDA 2017); androgenic and estrogenic activity.",
+    "aliases": []
+  },
+  "bha": {
+    "name": "BHA (Butylated Hydroxyanisole)",
+    "score": 6,
+    "concerns": ["Cancer", "Hormonal disruption"],
+    "description": "Synthetic antioxidant preservative. Possible human carcinogen per IARC; endocrine disruption concerns.",
+    "aliases": ["butylated hydroxyanisole", "1,1'-biphenyl-2-ol"]
+  },
+  "bht": {
+    "name": "BHT (Butylated Hydroxytoluene)",
+    "score": 4,
+    "concerns": ["Cancer", "Organ system toxicity"],
+    "description": "Synthetic antioxidant preservative. Some evidence of carcinogenicity at high doses.",
+    "aliases": ["butylated hydroxytoluene"]
+  },
+  "petrolatum": {
+    "name": "Petrolatum",
+    "score": 4,
+    "concerns": ["Cancer", "Contamination concerns"],
+    "description": "Petroleum-derived ingredient that may be contaminated with carcinogenic polycyclic aromatic hydrocarbons (PAHs) if not fully refined. EU requires proof of full refinement.",
+    "aliases": ["petroleum jelly", "mineral jelly", "white petrolatum"]
+  },
+  "mineral oil": {
+    "name": "Mineral Oil",
+    "score": 3,
+    "concerns": ["Cancer", "Contamination concerns"],
+    "description": "Petroleum byproduct; contamination concerns with PAHs similar to petrolatum.",
+    "aliases": ["paraffinum liquidum", "white mineral oil"]
+  },
+  "talc": {
+    "name": "Talc",
+    "score": 6,
+    "concerns": ["Cancer", "Contamination concerns"],
+    "description": "Mineral that may be contaminated with asbestos. High-risk in powder form (inhalation). Johnson & Johnson baby powder litigation involved talc contamination.",
+    "aliases": ["talcum", "magnesium silicate"]
+  },
+  "lead acetate": {
+    "name": "Lead Acetate",
+    "score": 10,
+    "concerns": ["Cancer", "Neurotoxicity", "Developmental & reproductive toxicity", "Restricted in other countries"],
+    "description": "Lead compound used in hair dyes. Banned in EU, Canada, and Japan. Known neurotoxin.",
+    "aliases": ["lead diacetate"]
+  },
+  "mercury": {
+    "name": "Mercury / Thimerosal",
+    "score": 10,
+    "concerns": ["Neurotoxicity", "Organ system toxicity", "Restricted in other countries"],
+    "description": "Mercury compounds are neurotoxic. Banned in cosmetics in the EU, Canada, and US (except some eye products).",
+    "aliases": ["thimerosal", "thiomersal", "mercuric chloride", "calomel"]
+  },
+  "hydroquinone": {
+    "name": "Hydroquinone",
+    "score": 7,
+    "concerns": ["Cancer", "Organ system toxicity", "Restricted in other countries"],
+    "description": "Skin lightening agent. Possible carcinogen (IARC Group 3). Banned in EU cosmetics over the counter.",
+    "aliases": ["1,4-benzenediol", "quinol"]
+  },
+  "coal tar": {
+    "name": "Coal Tar",
+    "score": 10,
+    "concerns": ["Cancer", "Restricted in other countries"],
+    "description": "Known human carcinogen. Used in dandruff/psoriasis treatments; banned in EU cosmetics.",
+    "aliases": ["coal tar solution", "lcd"]
+  },
+  "p-phenylenediamine": {
+    "name": "p-Phenylenediamine",
+    "score": 7,
+    "concerns": ["Cancer", "Allergies & immunotoxicity", "Organ system toxicity"],
+    "description": "Oxidative hair dye ingredient; potent allergen and possible carcinogen.",
+    "aliases": ["ppd", "1,4-diaminobenzene", "para-phenylenediamine"]
+  },
+  "resorcinol": {
+    "name": "Resorcinol",
+    "score": 6,
+    "concerns": ["Hormonal disruption", "Organ system toxicity", "Restricted in other countries"],
+    "description": "Used in hair dyes; thyroid disruption potential. Restricted in EU.",
+    "aliases": ["1,3-dihydroxybenzene", "resorcin"]
+  },
+  "ethanolamines": {
+    "name": "Ethanolamines (DEA/MEA/TEA)",
+    "score": 5,
+    "concerns": ["Cancer", "Organ system toxicity", "Contamination concerns"],
+    "description": "Emulsifiers and pH adjusters that can form carcinogenic nitrosamines. DEA restricted in EU.",
+    "aliases": ["diethanolamine", "dea", "triethanolamine", "tea", "monoethanolamine", "mea", "cocamide dea", "lauramide dea"]
+  },
+  "sodium lauryl sulfate": {
+    "name": "Sodium Lauryl Sulfate",
+    "score": 4,
+    "concerns": ["Allergies & immunotoxicity", "Organ system toxicity"],
+    "description": "Surfactant that can irritate and disrupt the skin barrier, especially with repeated use.",
+    "aliases": ["sls", "sodium dodecyl sulfate"]
+  },
+  "polyethylene glycol": {
+    "name": "Polyethylene Glycol (PEG)",
+    "score": 3,
+    "concerns": ["Contamination concerns"],
+    "description": "PEG compounds may be contaminated with carcinogenic 1,4-dioxane and ethylene oxide. Risk depends on purity.",
+    "aliases": ["peg", "polyoxypropylene", "ppg"]
+  },
+  "1,4-dioxane": {
+    "name": "1,4-Dioxane",
+    "score": 9,
+    "concerns": ["Cancer"],
+    "description": "Carcinogenic contaminant found in products containing ethoxylated ingredients (PEGs, sodium laureth sulfate). Not directly added but present as contamination.",
+    "aliases": ["dioxane"]
+  },
+  "sodium laureth sulfate": {
+    "name": "Sodium Laureth Sulfate",
+    "score": 3,
+    "concerns": ["Contamination concerns"],
+    "description": "Ethoxylated surfactant that may contain 1,4-dioxane and ethylene oxide as trace contaminants.",
+    "aliases": ["sles", "sodium lauryl ether sulfate"]
+  },
+  "cocamidopropyl betaine": {
+    "name": "Cocamidopropyl Betaine",
+    "score": 3,
+    "concerns": ["Allergies & immunotoxicity"],
+    "description": "Surfactant derived from coconut oil; named allergen of the year (2004) by the American Contact Dermatitis Society.",
+    "aliases": ["capb"]
+  },
+  "cyclomethicone": {
+    "name": "Cyclomethicone (D4/D5)",
+    "score": 5,
+    "concerns": ["Hormonal disruption", "Organ system toxicity", "Restricted in other countries"],
+    "description": "Cyclic silicones D4 and D5 are endocrine disruptors restricted in EU rinse-off products.",
+    "aliases": ["cyclopentasiloxane", "cyclotetrasiloxane", "d4", "d5", "d6"]
+  },
+  "toluene": {
+    "name": "Toluene",
+    "score": 8,
+    "concerns": ["Neurotoxicity", "Developmental & reproductive toxicity", "Organ system toxicity"],
+    "description": "Solvent used in nail polish; neurotoxic, causes developmental harm. Banned in EU cosmetics.",
+    "aliases": ["methylbenzene"]
+  },
+  "formaldehyde resin": {
+    "name": "Formaldehyde Resin (Tosylamide)",
+    "score": 7,
+    "concerns": ["Allergies & immunotoxicity"],
+    "description": "Common nail polish allergen. Distinct from formaldehyde but still sensitizing.",
+    "aliases": ["tosylamide/formaldehyde resin", "toluenesulfonamide formaldehyde resin"]
+  },
+  "dihydroxyacetone": {
+    "name": "Dihydroxyacetone",
+    "score": 3,
+    "concerns": ["Cancer"],
+    "description": "Self-tanning active ingredient. Some concern about free radical generation; classified as possibly mutagenic.",
+    "aliases": ["dha"]
+  },
+  "retinyl palmitate": {
+    "name": "Retinyl Palmitate",
+    "score": 7,
+    "concerns": ["Cancer", "Developmental & reproductive toxicity"],
+    "description": "Vitamin A ester that may accelerate skin tumor development when used in sun-exposed products per NTP studies.",
+    "aliases": ["vitamin a palmitate", "retinol palmitate"]
+  },
+  "retinol": {
+    "name": "Retinol",
+    "score": 4,
+    "concerns": ["Developmental & reproductive toxicity"],
+    "description": "Vitamin A derivative. High doses are teratogenic; FDA warns against use during pregnancy.",
+    "aliases": ["vitamin a", "all-trans retinol"]
+  },
+  "styrene": {
+    "name": "Styrene",
+    "score": 8,
+    "concerns": ["Cancer", "Neurotoxicity"],
+    "description": "Possible human carcinogen (IARC Group 2A). Used in some nail products.",
+    "aliases": ["ethenylbenzene", "vinylbenzene"]
+  },
+  "ethylene oxide": {
+    "name": "Ethylene Oxide",
+    "score": 10,
+    "concerns": ["Cancer", "Developmental & reproductive toxicity"],
+    "description": "Known human carcinogen (IARC Group 1). Found as a trace contaminant in ethoxylated cosmetic ingredients.",
+    "aliases": ["epoxyethane"]
+  },
+  "siloxane": {
+    "name": "Siloxane / D4",
+    "score": 5,
+    "concerns": ["Hormonal disruption", "Restricted in other countries"],
+    "description": "Cyclic siloxanes (D4, D5) are persistent environmental contaminants and endocrine disruptors. D4 banned in EU wash-off cosmetics.",
+    "aliases": ["octamethylcyclotetrasiloxane", "decamethylcyclopentasiloxane"]
+  },
+  "benzalkonium chloride": {
+    "name": "Benzalkonium Chloride",
+    "score": 5,
+    "concerns": ["Allergies & immunotoxicity", "Organ system toxicity"],
+    "description": "Antimicrobial preservative and surfactant; potent skin and eye irritant, common allergen.",
+    "aliases": ["bkc", "bac", "alkyl dimethyl benzyl ammonium chloride"]
+  },
+  "methylisothiazolinone": {
+    "name": "Methylisothiazolinone",
+    "score": 7,
+    "concerns": ["Allergies & immunotoxicity", "Neurotoxicity"],
+    "description": "Preservative that is a potent contact allergen; banned in leave-on products in EU. Neurotoxic in lab studies.",
+    "aliases": ["mi", "mit"]
+  },
+  "methylchloroisothiazolinone": {
+    "name": "Methylchloroisothiazolinone",
+    "score": 7,
+    "concerns": ["Allergies & immunotoxicity"],
+    "description": "Preservative (often combined with MI); potent allergen. Severely restricted in EU leave-on products.",
+    "aliases": ["mci", "kathon cg", "cmit"]
+  },
+  "iodopropynyl butylcarbamate": {
+    "name": "Iodopropynyl Butylcarbamate",
+    "score": 5,
+    "concerns": ["Organ system toxicity", "Allergies & immunotoxicity"],
+    "description": "Preservative that may affect the thyroid; banned in EU body lotion for children under 3.",
+    "aliases": ["ipbc"]
+  },
+  "teflon": {
+    "name": "PTFE / Teflon",
+    "score": 3,
+    "concerns": ["Cancer", "Contamination concerns"],
+    "description": "Used in cosmetics for texture; concern about PFAS contamination from manufacturing.",
+    "aliases": ["polytetrafluoroethylene", "ptfe"]
+  },
+  "pfas": {
+    "name": "PFAS (Per- and Polyfluoroalkyl Substances)",
+    "score": 9,
+    "concerns": ["Cancer", "Hormonal disruption", "Organ system toxicity"],
+    "description": "'Forever chemicals' linked to cancer and endocrine disruption. Found in some cosmetics and water-resistant products.",
+    "aliases": ["perfluorooctane sulfonate", "pfos", "pfoa", "polyfluoro"]
+  },
+  "titanium dioxide": {
+    "name": "Titanium Dioxide",
+    "score": 3,
+    "concerns": ["Cancer"],
+    "description": "Generally safe in sunscreens but classified as possible carcinogen when inhaled as nano-particles (IARC 2B). EU prohibits in spray-form cosmetics.",
+    "aliases": ["ci 77891", "e171"]
+  },
+  "aluminum compounds": {
+    "name": "Aluminum Compounds",
+    "score": 4,
+    "concerns": ["Neurotoxicity", "Hormonal disruption"],
+    "description": "Used in antiperspirants; accumulates in breast tissue. Weak estrogenic activity in lab studies.",
+    "aliases": ["aluminum chlorohydrate", "aluminum zirconium", "alum"]
+  },
+  "phenoxyethanol": {
+    "name": "Phenoxyethanol",
+    "score": 4,
+    "concerns": ["Organ system toxicity", "Allergies & immunotoxicity"],
+    "description": "Preservative linked to allergic reactions and skin irritation. FDA warned against use in nipple cream (infant exposure).",
+    "aliases": ["2-phenoxyethanol", "ethylene glycol monophenyl ether"]
+  },
+  "chlorphenesin": {
+    "name": "Chlorphenesin",
+    "score": 5,
+    "concerns": ["Organ system toxicity", "Allergies & immunotoxicity"],
+    "description": "Preservative and muscle relaxant. May cause neurotoxic effects; restricted in Japan.",
+    "aliases": ["3-(4-chlorophenoxy)-1,2-propanediol"]
+  },
+  "benzophenone": {
+    "name": "Benzophenone",
+    "score": 8,
+    "concerns": ["Cancer", "Hormonal disruption"],
+    "description": "UV stabilizer (not the sunscreen). IARC Group 2B possible carcinogen; endocrine disruption.",
+    "aliases": ["bp", "diphenyl ketone", "benzophenone-1", "benzophenone-2", "benzophenone-4"]
+  },
+  "styrene/acrylates copolymer": {
+    "name": "Styrene/Acrylates Copolymer",
+    "score": 5,
+    "concerns": ["Cancer"],
+    "description": "Film-forming polymer; styrene component is a possible carcinogen.",
+    "aliases": ["styrene acrylates copolymer"]
+  },
+  "nitrosamines": {
+    "name": "Nitrosamines",
+    "score": 9,
+    "concerns": ["Cancer"],
+    "description": "Carcinogenic impurities that can form from amines + nitrosating agents in cosmetics.",
+    "aliases": ["n-nitrosoamines", "ndea", "ndma"]
+  }
+}

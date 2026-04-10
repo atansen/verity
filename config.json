@@ -1,0 +1,43 @@
+{
+  "_comment": "Skincare Scanner Configuration. Edit this file to change thresholds, weights, and behavior.",
+
+  "databases": {
+    "ewg": {
+      "enabled": true,
+      "weight": 0.70,
+      "api_key": "",
+      "_comment_api_key": "Get a free EWG API key at https://www.ewg.org/skindeep/developers/",
+      "base_url": "https://data.ewg.org/skindeep/v2",
+      "timeout_seconds": 5
+    },
+    "open_beauty_facts": {
+      "enabled": true,
+      "weight": 0.30,
+      "base_url": "https://world.openbeautyfacts.org",
+      "timeout_seconds": 5
+    }
+  },
+
+  "scoring": {
+    "good_max": 3,
+    "moderate_max": 6,
+    "alternatives_threshold": 3
+  },
+
+  "alternatives": {
+    "same_brand_cap": 5,
+    "other_brand_cap": 5,
+    "same_brand_session_cap": 10
+  },
+
+  "display": {
+    "clear_screen_between_scans": true,
+    "show_barcode_in_header": true,
+    "max_flagged_ingredients_shown": 20
+  },
+
+  "offline": {
+    "force_offline": false,
+    "_comment": "Set force_offline to true to always use the built-in database only."
+  }
+}

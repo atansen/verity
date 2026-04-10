@@ -1,0 +1,31 @@
+[Unit]
+Description=Skincare & Makeup Product Scanner
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+WorkingDirectory=/opt/skincare-scanner
+ExecStart=/opt/skincare-scanner/venv/bin/python main.py
+
+# Automatically restart if the process crashes
+Restart=always
+RestartSec=5
+
+# Give systemd time to start the network before launching
+TimeoutStartSec=30
+
+# Connect to physical TTY1 so the USB barcode scanner input is received
+# Remove these two lines if running inside a desktop terminal emulator
+StandardInput=tty
+TTYPath=/dev/tty1
+StandardOutput=journal
+StandardError=journal
+
+# Environment
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
