@@ -153,6 +153,13 @@ class EWGClient(BaseAPIClient):
             for name, s in raw_ing_scores.items()
         }
 
+        # Product-level concerns from EWG (MODERATE + HIGH only, already filtered)
+        product_concerns = [
+            c["category"]
+            for c in (record.get("ewg_concerns") or [])
+            if c.get("level") in ("MODERATE", "HIGH")
+        ]
+
         return RawProductData(
             source=SOURCE_NAME,
             found=True,
@@ -162,4 +169,5 @@ class EWGClient(BaseAPIClient):
             product_score=product_score,
             ingredient_scores=ingredient_scores,
             score_is_direct=True,
+            product_concerns=product_concerns,
         )

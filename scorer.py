@@ -184,7 +184,10 @@ class Scanner:
         band = ScoreBand.from_score(compilation_score, self.good_max, self.moderate_max)
 
         # --- Concerns (deduplicated, severity sorted) ---
+        # Merge EWG product-level concerns + local DB ingredient-level concerns
         all_concerns: list[str] = []
+        if ewg_data and ewg_data.product_concerns:
+            all_concerns.extend(ewg_data.product_concerns)
         for _, record in local_matches:
             for c in record.get("concerns", []):
                 if c not in all_concerns:
@@ -347,25 +350,51 @@ def _compile_score(
 def _build_flagged_ingredients(
     local_matches: list, ewg_data: Optional[RawProductData]
 ) -> list[FlaggedIngredient]:
-    """Build the flagged ingredient list from local DB matches and EWG scores."""
-    flagged = []
-    for original_name, record in local_matches:
-        # Use EWG individual score if available
-        score = record["score"]
-        if ewg_data and ewg_data.ingredient_scores:
-            ewg_ing_score = ewg_data.ingredient_scores.get(original_name)
-            if ewg_ing_score is not None:
-                score = ewg_ing_score
+    """
+    Build the flagged ingredient list.
 
+    Sources (merged, deduplicated by ingredient name):
+      1. Local DB matches — ingredients in ingredients.json with known concerns
+      2. EWG per-ingredient scores >= 4 (0-10 scale) — flagged by EWG even if
+         not in our built-in DB
+    """
+    flagged: list[FlaggedIngredient] = []
+    seen_names: set[str] = set()
+
+    # --- Local DB matches (with known concern categories) ---
+    for original_name, record in local_matches:
+        score = float(record["score"])
+        # Override with EWG's per-ingredient score if available
+        if ewg_data and ewg_data.ingredient_scores:
+            ewg_s = ewg_data.ingredient_scores.get(original_name)
+            if ewg_s is not None:
+                score = ewg_s
+        display_name = record["name"]
+        seen_names.add(display_name.lower())
         flagged.append(FlaggedIngredient(
-            name=record["name"],
+            name=display_name,
             score=score,
             concerns=record.get("concerns", []),
             description=record.get("description", ""),
             source="ewg" if (ewg_data and ewg_data.ingredient_scores.get(original_name)) else "local_db",
         ))
 
-    # Sort by score descending (worst first)
+    # --- EWG-flagged ingredients not in local DB (score >= 4 on 0-10 = EWG raw >= 5) ---
+    if ewg_data and ewg_data.ingredient_scores:
+        for ing_name, ing_score in ewg_data.ingredient_scores.items():
+            if ing_score < 4.0:
+                continue
+            if ing_name.lower() in seen_names:
+                continue
+            seen_names.add(ing_name.lower())
+            flagged.append(FlaggedIngredient(
+                name=ing_name.title(),
+                score=ing_score,
+                concerns=[],   # EWG doesn't expose per-ingredient concern categories
+                description=f"Flagged by EWG Skin Deep (score {ing_score:.0f}/10).",
+                source="ewg",
+            ))
+
     flagged.sort(key=lambda x: x.score, reverse=True)
     return flagged
 

@@ -23,6 +23,7 @@ class RawProductData:
         product_score: Optional[float] = None,
         ingredient_scores: dict[str, float] = None,
         score_is_direct: bool = True,
+        product_concerns: list[str] = None,
     ):
         self.source = source
         self.found = found
@@ -32,6 +33,7 @@ class RawProductData:
         self.product_score = product_score           # 0-10 scale
         self.ingredient_scores = ingredient_scores or {}  # name -> 0-10
         self.score_is_direct = score_is_direct       # True = came from API; False = derived
+        self.product_concerns = product_concerns or []  # EWG-sourced concern categories
 
 
 class BaseAPIClient(ABC):
