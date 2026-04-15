@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Verity™ — Beauty should never cost you your health.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    /* ── Reset & base ───────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --hot-pink:   #E8003D;
+      --deep-pink:  #B5002E;
+      --light-pink: #FF8FAB;
+      --blush:      #FFF0F2;
+      --rose:       #FFD6D9;
+      --lavender:   #D64370;
+      --plum:       #8C0033;
+      --white:      #FFFFFF;
+      --text:       #3A0A1A;
+      --muted:      #924A5E;
+      --good:       #00C97A;
+      --moderate:   #FFB300;
+      --bad:        #FF3D3D;
+      --card-bg:    rgba(255,255,255,0.75);
+      --glass-border: rgba(232,0,61,0.2);
+      --shadow:     0 8px 40px rgba(181,0,46,0.13);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #FFF0F2 0%, #FFD6D9 30%, #FFDDE6 65%, #FFE4E6 100%);
+      min-height: 100vh;
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── Floating lipsticks ─────────────────────────────────────── */
+    .sparkle-layer {
+      position: fixed; inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .sparkle {
+      position: absolute;
+      opacity: 0;
+      animation: floatUp var(--dur, 8s) var(--delay, 0s) infinite ease-in-out;
+    }
+    .sparkle svg { display: block; }
+    @keyframes floatUp {
+      0%   { transform: translateY(110vh) rotate(var(--tilt, -8deg));  opacity: 0; }
+      10%  { opacity: 0.55; }
+      90%  { opacity: 0.2; }
+      100% { transform: translateY(-10vh)  rotate(var(--tilt, -8deg)); opacity: 0; }
+    }
+
+    /* ── Utility ────────────────────────────────────────────────── */
+    .glass {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+    }
+    .hidden { display: none !important; }
+    .fade-in {
+      animation: fadeSlideUp 0.6s ease both;
+    }
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Nav ────────────────────────────────────────────────────── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 40px;
+      background: rgba(255,240,242,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+    }
+    .nav-logo {
+      font-family: 'Raleway', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--deep-pink), var(--plum));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+    .nav-tagline {
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+    .api-status {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.72rem; color: var(--muted);
+    }
+    .status-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #ccc;
+      transition: background 0.3s;
+    }
+    .status-dot.online  { background: var(--good); box-shadow: 0 0 6px var(--good); }
+    .status-dot.offline { background: var(--bad); }
+
+    /* ── Hero ───────────────────────────────────────────────────── */
+    .hero {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 72px 24px 56px;
+      text-align: center;
+    }
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--hot-pink);
+      margin-bottom: 16px;
+      animation: fadeSlideUp 0.5s ease both;
+    }
+    .hero-title {
+      font-family: 'Raleway', sans-serif;
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      line-height: 1.05;
+      animation: fadeSlideUp 0.6s 0.1s ease both;
+      margin-bottom: 8px;
+      display: flex; align-items: center; justify-content: center; gap: 0;
+    }
+    .hero-title .grad {
+      background: linear-gradient(135deg, var(--deep-pink) 0%, #8C0033 40%, var(--hot-pink) 100%);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 4s infinite ease-in-out;
+    }
+    .hero-title .lipstick-i {
+      display: inline-flex;
+      align-items: center;
+      -webkit-text-fill-color: initial;
+      filter: drop-shadow(0 3px 8px rgba(181,0,46,0.35));
+      transform: translateY(0.04em) rotate(-10deg);
+      animation: lipstickWiggle 3s 1.2s ease-in-out infinite;
+      letter-spacing: 0;
+      height: 0.85em;
+    }
+    .hero-title .lipstick-i svg { height: 100%; width: auto; }
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50%       { background-position: 100% 50%; }
+    }
+    @keyframes lipstickWiggle {
+      0%, 100% { transform: translateY(0.04em) rotate(-10deg); }
+      50%       { transform: translateY(-0.04em) rotate(-6deg); }
+    }
+    .hero-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      color: var(--plum);
+      margin-bottom: 40px;
+      animation: fadeSlideUp 0.6s 0.2s ease both;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── Scanner card ───────────────────────────────────────────── */
+    .scanner-card {
+      width: 100%; max-width: 560px;
+      padding: 40px 36px;
+      animation: fadeSlideUp 0.7s 0.3s ease both;
+    }
+    .scanner-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+      display: block;
+    }
+    .scanner-input-wrap {
+      position: relative;
+      display: flex; gap: 10px;
+    }
+    .scanner-input {
+      flex: 1;
+      padding: 16px 20px;
+      border: 2px solid var(--light-pink);
+      border-radius: 14px;
+      font-size: 1rem;
+      font-family: 'Inter', sans-serif;
+      background: rgba(255,255,255,0.9);
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .scanner-input:focus {
+      border-color: var(--hot-pink);
+      box-shadow: 0 0 0 4px rgba(255,105,180,0.15);
+    }
+    .scanner-input::placeholder { color: var(--light-pink); }
+    .btn-scan {
+      padding: 16px 28px;
+      background: linear-gradient(135deg, var(--hot-pink), var(--deep-pink));
+      color: white;
+      border: none;
+      border-radius: 14px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+      box-shadow: 0 4px 20px rgba(255,20,147,0.35);
+      white-space: nowrap;
+    }
+    .btn-scan:hover  { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(255,20,147,0.45); }
+    .btn-scan:active { transform: translateY(0); }
+    .btn-scan:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    .scanner-hint {
+      margin-top: 14px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-align: center;
+    }
+    .scanner-hint span { color: var(--hot-pink); font-weight: 500; }
+
+    /* ── Loading spinner ────────────────────────────────────────── */
+    .loading-wrap {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 16px;
+      padding: 48px;
+    }
+    .loading-ring {
+      width: 56px; height: 56px;
+      border: 4px solid var(--light-pink);
+      border-top-color: var(--deep-pink);
+      border-radius: 50%;
+      animation: spin 0.9s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text {
+      font-size: 0.9rem; color: var(--muted);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+    /* ── Results section ────────────────────────────────────────── */
+    #results {
+      position: relative; z-index: 1;
+      max-width: 860px; margin: 0 auto;
+      padding: 0 24px 80px;
+      display: flex; flex-direction: column; gap: 20px;
+    }
+
+    /* product header */
+    .product-header {
+      padding: 28px 32px;
+      display: flex; align-items: center; gap: 20px;
+    }
+    .product-emoji { font-size: 2.2rem; flex-shrink: 0; }
+    .product-name {
+      font-family: 'Raleway', sans-serif;
+      font-size: 1.5rem; font-weight: 700;
+      color: var(--deep-pink);
+      line-height: 1.2;
+    }
+    .product-brand {
+      font-size: 0.85rem; color: var(--muted);
+      margin-top: 4px; letter-spacing: 0.04em;
+    }
+
+    /* overall score */
+    .score-card {
+      padding: 36px 32px;
+      display: flex; align-items: center; gap: 36px;
+      flex-wrap: wrap;
+    }
+    .score-ring-wrap { flex-shrink: 0; position: relative; }
+    .score-ring-svg { transform: rotate(-90deg); }
+    .score-ring-bg   { fill: none; stroke: #FFD6D9; stroke-width: 10; }
+    .score-ring-fill {
+      fill: none; stroke-width: 10;
+      stroke-linecap: round;
+      stroke-dasharray: 283; stroke-dashoffset: 283;
+      transition: stroke-dashoffset 1.4s cubic-bezier(0.4,0,0.2,1),
+                  stroke 0.5s ease;
+    }
+    .score-ring-text {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+    }
+    .score-number {
+      font-family: 'Raleway', sans-serif;
+      font-size: 2rem; font-weight: 700;
+      line-height: 1;
+    }
+    .score-denom { font-size: 0.72rem; color: var(--muted); }
+    .score-details { flex: 1; }
+    .score-label {
+      font-family: 'Raleway', sans-serif;
+      font-size: 1.6rem; font-weight: 700;
+    }
+    .score-sublabel { font-size: 0.9rem; color: var(--muted); margin-top: 4px; }
+    .score-bar-wrap { margin-top: 16px; }
+    .score-bar-track {
+      height: 8px; border-radius: 99px;
+      background: linear-gradient(to right, var(--good), var(--moderate), var(--bad));
+      position: relative;
+    }
+    .score-bar-marker {
+      position: absolute; top: 50%; transform: translate(-50%,-50%);
+      width: 16px; height: 16px; border-radius: 50%;
+      background: white; border: 3px solid var(--deep-pink);
+      box-shadow: 0 2px 8px rgba(255,20,147,0.3);
+      transition: left 1.4s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    /* database breakdown */
+    .section-title {
+      font-family: 'Raleway', sans-serif;
+      font-size: 1rem; font-weight: 700;
+      color: var(--deep-pink);
+      margin-bottom: 16px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .db-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 14px; }
+    .db-card {
+      padding: 20px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.65);
+      border: 1px solid var(--glass-border);
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .db-name { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+    .db-score { font-family: 'Raleway', sans-serif; font-size: 1.8rem; font-weight: 700; }
+    .db-grade { font-size: 0.8rem; font-weight: 600; }
+    .db-source { font-size: 0.7rem; color: var(--muted); font-style: italic; }
+
+    /* concerns */
+    .concerns-card { padding: 28px 32px; }
+    .concern-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+    .concern-chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 16px;
+      border-radius: 99px;
+      font-size: 0.8rem; font-weight: 500;
+      background: rgba(255,61,61,0.08);
+      color: #c0392b;
+      border: 1px solid rgba(255,61,61,0.2);
+      animation: fadeSlideUp 0.4s ease both;
+    }
+    .no-concerns {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 20px;
+      border-radius: 99px;
+      background: rgba(0,201,122,0.1);
+      color: #007a47;
+      border: 1px solid rgba(0,201,122,0.25);
+      font-size: 0.9rem; font-weight: 500;
+    }
+
+    /* ingredients table */
+    .ingredients-card { padding: 28px 32px; overflow-x: auto; }
+    .ing-table {
+      width: 100%; border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    .ing-table th {
+      text-align: left; padding: 10px 14px;
+      font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 2px solid var(--light-pink);
+    }
+    .ing-table td { padding: 10px 14px; border-bottom: 1px solid rgba(255,182,193,0.3); }
+    .ing-table tr:last-child td { border-bottom: none; }
+    .ing-table tr:hover td { background: rgba(255,105,180,0.04); }
+    .score-pill {
+      display: inline-block;
+      padding: 3px 10px; border-radius: 99px;
+      font-size: 0.75rem; font-weight: 700;
+      color: white;
+    }
+
+    /* alternatives */
+    .alts-card { padding: 28px 32px; }
+    .alts-section-label {
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--hot-pink);
+      margin-bottom: 12px; margin-top: 20px;
+    }
+    .alts-section-label:first-of-type { margin-top: 4px; }
+    .alt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px,1fr)); gap: 12px; }
+    .alt-card {
+      padding: 16px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.6);
+      border: 1px solid var(--glass-border);
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+    .alt-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(255,20,147,0.15); }
+    .alt-brand { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+    .alt-name  { font-size: 0.88rem; font-weight: 600; color: var(--text); margin: 4px 0; line-height: 1.3; }
+    .alt-score { font-size: 0.78rem; font-weight: 700; }
+
+    /* ── color helpers ──────────────────────────────────────────── */
+    .c-good     { color: var(--good); }
+    .c-moderate { color: var(--moderate); }
+    .c-bad      { color: var(--bad); }
+    .bg-good     { background: var(--good); }
+    .bg-moderate { background: var(--moderate); }
+    .bg-bad      { background: var(--bad); }
+
+    /* ── API config modal ───────────────────────────────────────── */
+    .config-btn {
+      position: fixed; bottom: 28px; right: 28px; z-index: 200;
+      width: 48px; height: 48px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--hot-pink), var(--plum));
+      color: white; border: none; cursor: pointer;
+      font-size: 1.2rem; box-shadow: 0 4px 16px rgba(255,20,147,0.35);
+      transition: transform 0.2s;
+    }
+    .config-btn:hover { transform: scale(1.1) rotate(30deg); }
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 300;
+      background: rgba(61,26,46,0.5);
+      backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .modal {
+      width: min(480px, 90vw);
+      padding: 36px; border-radius: 24px;
+      background: #fff;
+      box-shadow: 0 24px 64px rgba(255,20,147,0.2);
+    }
+    .modal h2 {
+      font-family: 'Raleway', sans-serif;
+      color: var(--deep-pink); margin-bottom: 8px;
+    }
+    .modal p { font-size: 0.85rem; color: var(--muted); margin-bottom: 24px; line-height: 1.6; }
+    .modal-input {
+      width: 100%; padding: 14px 16px;
+      border: 2px solid var(--light-pink); border-radius: 12px;
+      font-size: 0.95rem; font-family: 'Inter', sans-serif;
+      outline: none; transition: border-color 0.2s;
+      margin-bottom: 16px;
+    }
+    .modal-input:focus { border-color: var(--hot-pink); }
+    .modal-actions { display: flex; gap: 12px; justify-content: flex-end; }
+    .btn-secondary {
+      padding: 12px 24px; border-radius: 12px;
+      background: transparent; border: 2px solid var(--light-pink);
+      color: var(--muted); cursor: pointer; font-family: 'Inter', sans-serif;
+      font-size: 0.9rem; transition: border-color 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--hot-pink); color: var(--hot-pink); }
+    .btn-primary {
+      padding: 12px 24px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--hot-pink), var(--deep-pink));
+      color: white; border: none; cursor: pointer;
+      font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 600;
+      box-shadow: 0 4px 14px rgba(255,20,147,0.3);
+    }
+
+    /* ── Demo notice ────────────────────────────────────────────── */
+    .demo-banner {
+      max-width: 860px; margin: 0 auto 0;
+      padding: 0 24px;
+    }
+    .demo-inner {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 20px;
+      background: rgba(232,0,61,0.06);
+      border: 1px solid rgba(232,0,61,0.18);
+      border-radius: 12px;
+      font-size: 0.82rem; color: var(--muted);
+    }
+    .demo-inner span { color: var(--hot-pink); font-weight: 600; }
+
+    /* ── Responsive ─────────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      nav { padding: 14px 20px; }
+      .hero { padding: 48px 16px 40px; }
+      .scanner-card { padding: 28px 20px; }
+      .score-card { flex-direction: column; align-items: flex-start; gap: 20px; }
+      .product-header, .concerns-card,
+      .ingredients-card, .alts-card { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Floating sparkles ── -->
+<div class="sparkle-layer" id="sparkleLayer"></div>
+
+<!-- ── Nav ── -->
+<nav>
+  <div>
+    <div class="nav-logo">VER<span style="-webkit-text-fill-color:initial;display:inline-flex;align-items:center;height:1em;vertical-align:middle;transform:translateY(-0.05em) rotate(-8deg);"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 58" height="1.2em"><rect x="6" y="37" width="12" height="18" rx="2" fill="#C8C8C8"/><rect x="7.5" y="37" width="4" height="18" rx="1" fill="rgba(255,255,255,0.42)"/><rect x="5.5" y="34" width="13" height="3.5" rx="1" fill="#A0A0A0"/><path d="M7 34 L7 20 L12 11 L17 20 L17 34 Z" fill="#C2003A"/><path d="M7 20 L12 11 L17 16.5 L17 20 Z" fill="#7A0020"/><line x1="14.5" y1="13" x2="16" y2="27" stroke="rgba(255,255,255,0.58)" stroke-width="1.8" stroke-linecap="round"/></svg></span>TY™</div>
+    <div class="nav-tagline">Beauty should never cost you your health.</div>
+  </div>
+  <div class="api-status">
+    <div class="status-dot" id="statusDot"></div>
+    <span id="statusText">checking...</span>
+  </div>
+</nav>
+
+<!-- ── Hero ── -->
+<section class="hero">
+  <div class="hero-eyebrow">✦ Skincare & Makeup Safety Scanner ✦</div>
+  <h1 class="hero-title"><span class="grad">VER</span><span class="lipstick-i"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 58"><defs><linearGradient id="hbullet" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#9A0030"/><stop offset="55%" stop-color="#E8003D"/><stop offset="100%" stop-color="#C2003A"/></linearGradient><linearGradient id="htube" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#B0B0B0"/><stop offset="38%" stop-color="#E8E8E8"/><stop offset="100%" stop-color="#B8B8B8"/></linearGradient></defs><rect x="6" y="37" width="12" height="18" rx="2" fill="url(#htube)"/><rect x="5.5" y="34" width="13" height="3.5" rx="1" fill="#A0A0A0"/><path d="M7 34 L7 20 L12 11 L17 20 L17 34 Z" fill="url(#hbullet)"/><path d="M7 20 L12 11 L17 16.5 L17 20 Z" fill="#6A001A"/><line x1="14.5" y1="13" x2="16" y2="27" stroke="rgba(255,255,255,0.62)" stroke-width="2" stroke-linecap="round"/></svg></span><span class="grad">TY™</span></h1>
+  <p class="hero-sub">Beauty should never cost you your health.</p>
+
+  <div class="glass scanner-card">
+    <label class="scanner-label" for="barcodeInput">Scan or enter a product barcode</label>
+    <div class="scanner-input-wrap">
+      <input
+        id="barcodeInput"
+        class="scanner-input"
+        type="text"
+        inputmode="numeric"
+        placeholder="e.g. 301871329274"
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <button class="btn-scan" id="scanBtn" onclick="runScan()">
+        🌸 Check It
+      </button>
+    </div>
+    <p class="scanner-hint">
+      Try: <span onclick="tryDemo('301871329274')" style="cursor:pointer">CeraVe Moisturizer</span>
+      &nbsp;·&nbsp;
+      <span onclick="tryDemo('070501109006')" style="cursor:pointer">Neutrogena Hydro Boost</span>
+      &nbsp;·&nbsp;
+      <span onclick="tryDemo('381371190065')" style="cursor:pointer">Aveeno Daily</span>
+    </p>
+  </div>
+</section>
+
+<!-- ── Demo notice (shown when no API) ── -->
+<div class="demo-banner hidden" id="demoBanner">
+  <div class="demo-inner">
+    💡 <span>Demo mode</span> — connect to your Raspberry Pi for live results.
+    Click ⚙️ below to set your API URL.
+  </div>
+</div>
+
+<!-- ── Results ── -->
+<section id="results" class="hidden"></section>
+
+<!-- ── Config button ── -->
+<button class="config-btn" title="API Settings" onclick="openConfig()">⚙️</button>
+
+<!-- ── Config modal ── -->
+<div class="modal-overlay hidden" id="configModal">
+  <div class="modal glass">
+    <h2>💗 Connect to Verity</h2>
+    <p>
+      Enter the URL of your Raspberry Pi running <code>web_server.py</code>.
+      Usually <code>http://[pi-ip-address]:5000</code>.
+      Leave blank to use demo data.
+    </p>
+    <input id="apiUrlInput" class="modal-input" type="text"
+           placeholder="http://192.168.1.42:5000"/>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeConfig()">Cancel</button>
+      <button class="btn-primary"   onclick="saveConfig()">Save ✨</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ── Config ──────────────────────────────────────────────────── */
+  let API_URL = localStorage.getItem('verity_api_url') || '';
+
+  function openConfig()  {
+    document.getElementById('apiUrlInput').value = API_URL;
+    document.getElementById('configModal').classList.remove('hidden');
+  }
+  function closeConfig() { document.getElementById('configModal').classList.add('hidden'); }
+  function saveConfig()  {
+    API_URL = document.getElementById('apiUrlInput').value.trim().replace(/\/$/, '');
+    localStorage.setItem('verity_api_url', API_URL);
+    closeConfig();
+    checkApiStatus();
+  }
+
+  /* ── API status check ────────────────────────────────────────── */
+  async function checkApiStatus() {
+    const dot  = document.getElementById('statusDot');
+    const text = document.getElementById('statusText');
+    if (!API_URL) {
+      dot.className  = 'status-dot offline';
+      text.textContent = 'demo mode';
+      document.getElementById('demoBanner').classList.remove('hidden');
+      return;
+    }
+    try {
+      const r = await fetch(`${API_URL}/health`, { signal: AbortSignal.timeout(3000) });
+      if (r.ok) {
+        dot.className = 'status-dot online';
+        text.textContent = 'Pi connected';
+        document.getElementById('demoBanner').classList.add('hidden');
+      } else { throw new Error(); }
+    } catch {
+      dot.className = 'status-dot offline';
+      text.textContent = 'Pi offline';
+      document.getElementById('demoBanner').classList.remove('hidden');
+    }
+  }
+
+  /* ── Floating illustrated lipsticks ─────────────────────────── */
+  const LIPSTICK_SVGS = [
+    // classic angled bullet — crimson + silver tube
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 58">
+      <rect x="6" y="37" width="12" height="18" rx="2" fill="#C8C8C8"/>
+      <rect x="7.5" y="37" width="4" height="18" rx="1" fill="rgba(255,255,255,0.42)"/>
+      <rect x="5.5" y="34" width="13" height="3.5" rx="1" fill="#A0A0A0"/>
+      <path d="M7 34 L7 20 L12 11 L17 20 L17 34 Z" fill="#C2003A"/>
+      <path d="M7 20 L12 11 L17 16.5 L17 20 Z" fill="#7A0020"/>
+      <path d="M7 34 L7 22 L10.5 34 Z" fill="rgba(255,255,255,0.13)"/>
+      <line x1="14.5" y1="13" x2="16" y2="27" stroke="rgba(255,255,255,0.58)" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>`,
+    // round-tip bullet — hot red + gold collar
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 58">
+      <rect x="6" y="37" width="12" height="18" rx="2" fill="#BEBEBE"/>
+      <rect x="7.5" y="37" width="3.5" height="18" rx="1" fill="rgba(255,255,255,0.38)"/>
+      <rect x="5.5" y="34" width="13" height="3.5" rx="1" fill="#C8A000"/>
+      <path d="M7 34 L7 21 Q7 10 12 10 Q17 10 17 21 L17 34 Z" fill="#E8003D"/>
+      <path d="M7 34 L7 23 L10.5 34 Z" fill="rgba(255,255,255,0.12)"/>
+      <line x1="14.5" y1="13" x2="15.5" y2="26" stroke="rgba(255,255,255,0.55)" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>`,
+    // flat-top worn bullet — burgundy + silver
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 58">
+      <rect x="6" y="37" width="12" height="18" rx="2" fill="#D2D2D2"/>
+      <rect x="7.5" y="37" width="4" height="18" rx="1" fill="rgba(255,255,255,0.4)"/>
+      <rect x="5.5" y="34" width="13" height="3.5" rx="1" fill="#A0A0A0"/>
+      <rect x="7" y="18" width="10" height="16" rx="1" fill="#9A0030"/>
+      <path d="M7 18 L7 15.5 Q8 10 12 10 Q16 10 17 15.5 L17 18 Z" fill="#C2003A"/>
+      <path d="M7 34 L7 22 L10 34 Z" fill="rgba(255,255,255,0.1)"/>
+      <line x1="14.5" y1="12" x2="15.5" y2="24" stroke="rgba(255,255,255,0.52)" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>`,
+  ];
+
+  const layer = document.getElementById('sparkleLayer');
+  for (let i = 0; i < 26; i++) {
+    const s = document.createElement('span');
+    s.className = 'sparkle';
+    const size = 16 + Math.random() * 20;
+    const tilt = (Math.random() * 32 - 16).toFixed(1);
+    s.innerHTML = LIPSTICK_SVGS[Math.floor(Math.random() * LIPSTICK_SVGS.length)];
+    s.querySelector('svg').setAttribute('width', size);
+    s.querySelector('svg').setAttribute('height', size * 2.42);
+    s.style.cssText = `
+      left: ${Math.random() * 100}%;
+      --dur: ${9 + Math.random() * 10}s;
+      --delay: ${Math.random() * 16}s;
+      --tilt: ${tilt}deg;
+    `;
+    layer.appendChild(s);
+  }
+
+  /* ── Demo data ───────────────────────────────────────────────── */
+  const DEMO_DATA = {
+    '301871329274': {
+      product: { name: 'Moisturizing Cream', brand: 'CeraVe', barcode: '301871329274' },
+      scores: {
+        compilation_score: 3, compilation_grade: 'Clean Girl', compilation_label: 'Low hazard',
+        databases: {
+          ewg: { score: 3, grade: 'GOOD', source: 'ewg_fallback', concerns: [], flagged_ingredients: [] },
+          open_beauty_facts: { score: 2, grade: 'GOOD', source: 'open_beauty_facts', concerns: [], flagged_ingredients: [] }
+        },
+        all_concerns: [],
+        all_flagged_ingredients: [
+          { name: 'Cetearyl Alcohol', score: 3, concerns: ['Allergies & immunotoxicity'] }
+        ]
+      },
+      alternatives: { same_brand: [], other_brand: [] }
+    },
+    '070501109006': {
+      product: { name: 'Hydro Boost Water Gel', brand: 'Neutrogena', barcode: '070501109006' },
+      scores: {
+        compilation_score: 5, compilation_grade: 'Proceed with Glam', compilation_label: 'Moderate hazard',
+        databases: {
+          ewg: { score: 5, grade: 'MODERATE', source: 'ewg_fallback', concerns: ['Allergies & immunotoxicity'], flagged_ingredients: [] },
+          open_beauty_facts: { score: 4, grade: 'MODERATE', source: 'open_beauty_facts', concerns: [], flagged_ingredients: [] }
+        },
+        all_concerns: ['Allergies & immunotoxicity', 'Contamination concerns'],
+        all_flagged_ingredients: [
+          { name: 'Fragrance', score: 8, concerns: ['Allergies & immunotoxicity', 'Hidden / undisclosed ingredients', 'Hormonal disruption'] },
+          { name: 'Phenoxyethanol', score: 4, concerns: ['Allergies & immunotoxicity', 'Organ system toxicity'] }
+        ]
+      },
+      alternatives: {
+        same_brand: [{ name: 'Sensitive Skin Cleanser', brand: 'Neutrogena', score: 2, grade: 'GOOD' }],
+        other_brand: [{ name: 'Moisturizing Cream', brand: 'CeraVe', score: 3, grade: 'GOOD' }, { name: 'Daily Moisturizer', brand: 'Aveeno', score: 2, grade: 'GOOD' }]
+      }
+    },
+    '381371190065': {
+      product: { name: 'Daily Moisturizing Lotion', brand: 'Aveeno', barcode: '381371190065' },
+      scores: {
+        compilation_score: 7, compilation_grade: 'Red Flag, babe', compilation_label: 'High hazard',
+        databases: {
+          ewg: { score: 7, grade: 'BAD', source: 'ewg_fallback', concerns: ['Cancer', 'Hormonal disruption'], flagged_ingredients: [] },
+          open_beauty_facts: { score: 6, grade: 'MODERATE', source: 'open_beauty_facts', concerns: [], flagged_ingredients: [] }
+        },
+        all_concerns: ['Cancer', 'Hormonal disruption', 'Allergies & immunotoxicity', 'Developmental & reproductive toxicity'],
+        all_flagged_ingredients: [
+          { name: 'Fragrance', score: 8, concerns: ['Allergies & immunotoxicity', 'Hidden / undisclosed ingredients', 'Hormonal disruption'] },
+          { name: 'Propylparaben', score: 6, concerns: ['Hormonal disruption', 'Developmental & reproductive toxicity'] },
+          { name: 'Methylparaben', score: 4, concerns: ['Hormonal disruption', 'Allergies & immunotoxicity'] },
+          { name: 'DMDM Hydantoin', score: 7, concerns: ['Cancer', 'Allergies & immunotoxicity'] }
+        ]
+      },
+      alternatives: {
+        same_brand: [],
+        other_brand: [{ name: 'Moisturizing Cream', brand: 'CeraVe', score: 3, grade: 'GOOD' }, { name: 'Sensitive Skin Lotion', brand: 'Vanicream', score: 2, grade: 'GOOD' }]
+      }
+    }
+  };
+
+  function tryDemo(barcode) {
+    document.getElementById('barcodeInput').value = barcode;
+    runScan();
+  }
+
+  /* ── Main scan function ──────────────────────────────────────── */
+  async function runScan() {
+    const barcode = document.getElementById('barcodeInput').value.trim();
+    if (!barcode) return;
+
+    const btn = document.getElementById('scanBtn');
+    btn.disabled = true;
+    btn.textContent = '🌸 Checking...';
+
+    showLoading();
+
+    try {
+      let data;
+      if (API_URL) {
+        const r = await fetch(`${API_URL}/scan/${barcode}`);
+        if (r.status === 404) { showNotFound(barcode); return; }
+        data = await r.json();
+      } else {
+        // Demo mode — fake a small delay
+        await new Promise(r => setTimeout(r, 1200));
+        data = DEMO_DATA[barcode];
+        if (!data) { showNotFound(barcode); return; }
+      }
+      renderResults(data);
+    } catch (e) {
+      showError();
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '🌸 Check It';
+    }
+  }
+
+  // Allow Enter key
+  document.getElementById('barcodeInput')
+    .addEventListener('keydown', e => { if (e.key === 'Enter') runScan(); });
+
+  /* ── Loading state ───────────────────────────────────────────── */
+  function showLoading() {
+    const results = document.getElementById('results');
+    results.classList.remove('hidden');
+    results.innerHTML = `
+      <div class="glass loading-wrap">
+        <div class="loading-ring"></div>
+        <p class="loading-text">✦ Checking every ingredient...</p>
+      </div>`;
+    results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function showNotFound(barcode) {
+    document.getElementById('results').innerHTML = `
+      <div class="glass" style="padding:40px;text-align:center">
+        <div style="font-size:2.5rem;margin-bottom:16px">🌷</div>
+        <h2 style="font-family:'Raleway',sans-serif;color:var(--deep-pink);margin-bottom:8px">
+          Product not found</h2>
+        <p style="color:var(--muted);font-size:0.9rem">
+          No result for barcode <strong>${barcode}</strong>.<br/>
+          Try adding it at
+          <a href="https://openbeautyfacts.org" target="_blank"
+             style="color:var(--hot-pink)">openbeautyfacts.org</a> 💗
+        </p>
+      </div>`;
+  }
+
+  function showError() {
+    document.getElementById('results').innerHTML = `
+      <div class="glass" style="padding:40px;text-align:center">
+        <div style="font-size:2.5rem;margin-bottom:16px">🌷</div>
+        <h2 style="font-family:'Raleway',sans-serif;color:var(--deep-pink);margin-bottom:8px">
+          Something went wrong</h2>
+        <p style="color:var(--muted);font-size:0.9rem">
+          Couldn't reach the Verity API. Check your Raspberry Pi is running
+          <strong>web_server.py</strong> and try again. 💗</p>
+      </div>`;
+  }
+
+  /* ── Render results ──────────────────────────────────────────── */
+  function scoreColor(s) {
+    if (s <= 3) return 'var(--good)';
+    if (s <= 6) return 'var(--moderate)';
+    return 'var(--bad)';
+  }
+  function scoreClass(s) {
+    if (s <= 3) return 'c-good';
+    if (s <= 6) return 'c-moderate';
+    return 'c-bad';
+  }
+  function scoreEmoji(s) {
+    if (s <= 3) return '🌸';
+    if (s <= 6) return '⚠️';
+    return '🚨';
+  }
+  function gradeLabel(s) {
+    if (s <= 3) return 'Clean Girl';
+    if (s <= 6) return 'Proceed with Glam';
+    return 'Red Flag, babe';
+  }
+
+  function renderResults({ product, scores, alternatives }) {
+    const s      = scores.compilation_score;
+    const color  = scoreColor(s);
+    const sClass = scoreClass(s);
+
+    // ring: circumference = 2π×45 ≈ 283
+    const circ  = 283;
+    const offset = circ - (s / 10) * circ;
+
+    const dbNames = { ewg: 'EWG Skin Deep', open_beauty_facts: 'Open Beauty Facts' };
+
+    // Per-database cards
+    let dbCards = '';
+    for (const [key, db] of Object.entries(scores.databases)) {
+      if (!db) continue;
+      dbCards += `
+        <div class="db-card fade-in">
+          <div class="db-name">${dbNames[key] || key}</div>
+          <div class="db-score ${scoreClass(db.score)}">${db.score}<span style="font-size:1rem;font-weight:400;color:var(--muted)">/10</span></div>
+          <div class="db-grade ${scoreClass(db.score)}">${db.grade}</div>
+          <div class="db-source">${db.source === 'ewg_api' ? '✦ API' : 'ingredient analysis'}</div>
+        </div>`;
+    }
+
+    // Concern chips
+    let concernsHtml = '';
+    if (scores.all_concerns.length) {
+      concernsHtml = scores.all_concerns.map(c =>
+        `<span class="concern-chip">🎀 ${c}</span>`
+      ).join('');
+    } else {
+      concernsHtml = `<span class="no-concerns">🌸 No major concerns detected</span>`;
+    }
+
+    // Ingredients table
+    let ingRows = '';
+    for (const ing of scores.all_flagged_ingredients) {
+      ingRows += `
+        <tr>
+          <td style="font-weight:500">${ing.name}</td>
+          <td><span class="score-pill" style="background:${scoreColor(ing.score)}">${ing.score}/10</span></td>
+          <td style="color:var(--muted);font-size:0.8rem">${ing.concerns.join(', ') || '—'}</td>
+        </tr>`;
+    }
+
+    // Alternatives
+    let altsHtml = '';
+    const same  = alternatives.same_brand  || [];
+    const other = alternatives.other_brand || [];
+    if (s > 3 && (same.length || other.length)) {
+      altsHtml = `
+        <div class="alts-card glass fade-in">
+          <div class="section-title">✦ Safer Alternatives</div>`;
+      if (same.length) {
+        altsHtml += `<div class="alts-section-label">Same brand</div><div class="alt-grid">`;
+        for (const a of same) altsHtml += altCard(a);
+        altsHtml += `</div>`;
+      }
+      if (other.length) {
+        altsHtml += `<div class="alts-section-label">Other brands</div><div class="alt-grid">`;
+        for (const a of other) altsHtml += altCard(a);
+        altsHtml += `</div>`;
+      }
+      altsHtml += `</div>`;
+    }
+
+    const html = `
+      <!-- Product header -->
+      <div class="product-header glass fade-in">
+        <div class="product-emoji">${scoreEmoji(s)}</div>
+        <div>
+          <div class="product-name">${product.name}</div>
+          <div class="product-brand">${product.brand}</div>
+        </div>
+      </div>
+
+      <!-- Overall score -->
+      <div class="score-card glass fade-in">
+        <div class="score-ring-wrap">
+          <svg class="score-ring-svg" width="100" height="100" viewBox="0 0 100 100">
+            <circle class="score-ring-bg" cx="50" cy="50" r="45"/>
+            <circle class="score-ring-fill" id="scoreRing" cx="50" cy="50" r="45"
+                    style="stroke:${color}"/>
+          </svg>
+          <div class="score-ring-text">
+            <span class="score-number ${sClass}" id="scoreNum">0</span>
+            <span class="score-denom">/10</span>
+          </div>
+        </div>
+        <div class="score-details">
+          <div class="score-label ${sClass}">${scores.compilation_grade}</div>
+          <div class="score-sublabel">${scores.compilation_label} · weighted compilation</div>
+          <div class="score-bar-wrap">
+            <div class="score-bar-track">
+              <div class="score-bar-marker" id="scoreMarker" style="left:0%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Database breakdown -->
+      <div class="glass fade-in" style="padding:28px 32px">
+        <div class="section-title">✦ Database Breakdown</div>
+        <div class="db-grid">${dbCards}</div>
+      </div>
+
+      <!-- Concerns -->
+      <div class="concerns-card glass fade-in">
+        <div class="section-title">✦ Red Flags</div>
+        <div class="concern-chips">${concernsHtml}</div>
+      </div>
+
+      ${ingRows ? `
+      <!-- Flagged ingredients -->
+      <div class="ingredients-card glass fade-in">
+        <div class="section-title">✦ Flagged Ingredients</div>
+        <table class="ing-table">
+          <thead><tr><th>Ingredient</th><th>Score</th><th>Concerns</th></tr></thead>
+          <tbody>${ingRows}</tbody>
+        </table>
+      </div>` : ''}
+
+      ${altsHtml}
+    `;
+
+    const results = document.getElementById('results');
+    results.innerHTML = html;
+    results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // Animate score ring + number
+    requestAnimationFrame(() => {
+      document.getElementById('scoreRing').style.strokeDashoffset = offset;
+      document.getElementById('scoreMarker').style.left = `${(s / 10) * 100}%`;
+      animateNumber('scoreNum', 0, s, 1200);
+    });
+  }
+
+  function altCard(a) {
+    return `
+      <div class="alt-card">
+        <div class="alt-brand">${a.brand}</div>
+        <div class="alt-name">${a.name}</div>
+        <div class="alt-score ${scoreClass(a.score)}">${scoreEmoji(a.score)} Score ${a.score}/10</div>
+      </div>`;
+  }
+
+  function animateNumber(id, from, to, duration) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const start = performance.now();
+    function step(now) {
+      const p = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(from + (to - from) * ease);
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  /* ── Init ────────────────────────────────────────────────────── */
+  checkApiStatus();
+</script>
+</body>
+</html>
