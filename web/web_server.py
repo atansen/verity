@@ -13,7 +13,7 @@ Endpoints:
     GET  /product/<barcode>   → raw product info only (no scoring)
 """
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 import json
 import os
@@ -209,6 +209,18 @@ def scan(barcode):
     })
 
 
+@app.route("/")
+def serve_index():
+    """Serve the main Verity web app (for phones / laptops)."""
+    return send_from_directory(BASE_DIR, "index.html")
+
+
+@app.route("/lcd")
+def serve_lcd():
+    """Serve the 2.8-inch Pi LCD interface (320×240)."""
+    return send_from_directory(BASE_DIR, "lcd.html")
+
+
 @app.route("/config")
 def get_config():
     """Return the public parts of config (no API keys)."""
@@ -234,7 +246,8 @@ if __name__ == "__main__":
     print()
     print("  ✨ Verity™ Web Server")
     print(f"  🌸 Listening on http://{args.host}:{args.port}")
-    print(f"  💗 Open http://[your-pi-ip]:{args.port} in a browser")
+    print(f"  💗 Main site  → http://[your-pi-ip]:{args.port}/")
+    print(f"  📺 Pi LCD     → http://[your-pi-ip]:{args.port}/lcd")
     print()
 
     app.run(host=args.host, port=args.port, debug=args.debug)
