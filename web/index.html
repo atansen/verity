@@ -1090,6 +1090,27 @@
       };
     }
 
+    // Same-brand safer alternatives (only shown for score > 3)
+    let same_brand = [];
+    if (sc > 3) {
+      const brandLower = (p.brand || '').toLowerCase().trim();
+      same_brand = EWG_PRODUCTS
+        .filter(other =>
+          other.barcode !== p.barcode &&
+          (other.brand || '').toLowerCase().trim() === brandLower &&
+          other.score.compiled < sc
+        )
+        .sort((a, b) => a.score.compiled - b.score.compiled)
+        .slice(0, 4)
+        .map(other => ({
+          name:    other.name,
+          brand:   other.brand,
+          score:   other.score.compiled,
+          grade:   other.score.grade,
+          barcode: other.barcode
+        }));
+    }
+
     return {
       product: {
         name:        p.name,
@@ -1106,7 +1127,7 @@
         all_flagged_ingredients: all_flagged_ingredients,
         databases
       },
-      alternatives: { same_brand: [], other_brand: [] }
+      alternatives: { same_brand, other_brand: [] }
     };
   }
 
@@ -1488,8 +1509,11 @@
   }
 
   function altCard(a) {
+    const clickHandler = a.barcode
+      ? `onclick="document.getElementById('barcodeInput').value='${a.barcode}';runScan();" title="Tap to scan this product"`
+      : '';
     return `
-      <div class="alt-card">
+      <div class="alt-card" ${clickHandler}>
         <div class="alt-brand">${a.brand}</div>
         <div class="alt-name">${a.name}</div>
         <div class="alt-score ${scoreClass(a.score)}">${scoreEmoji(a.score)} Score ${a.score}/10</div>
