@@ -239,6 +239,138 @@
     }
     .scanner-hint span { color: var(--hot-pink); font-weight: 500; }
 
+    /* ── Camera button ─────────────────────────────────── */
+    .btn-camera {
+      padding: 16px 18px;
+      background: rgba(255,105,180,0.12);
+      color: var(--hot-pink);
+      border: 2px solid var(--light-pink);
+      border-radius: 14px;
+      font-size: 1.25rem;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, transform 0.15s;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .btn-camera:hover { background: rgba(255,105,180,0.22); border-color: var(--hot-pink); transform: translateY(-1px); }
+    .btn-camera:active { transform: translateY(0); }
+
+    /* ── Camera overlay ────────────────────────────────── */
+    .camera-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10,0,15,0.95);
+      z-index: 9000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.2s ease;
+    }
+    .camera-overlay.hidden { display: none; }
+    .camera-modal {
+      width: 100%;
+      max-width: 480px;
+      padding: 24px 20px 28px;
+    }
+    .camera-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+    .camera-title {
+      font-family: 'Raleway', sans-serif;
+      font-weight: 900;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      color: white;
+      text-transform: uppercase;
+    }
+    .btn-camera-close {
+      background: rgba(255,255,255,0.12);
+      border: none;
+      color: white;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.2s;
+    }
+    .btn-camera-close:hover { background: rgba(255,255,255,0.25); }
+    .camera-viewport {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      background: #000;
+      aspect-ratio: 4/3;
+      width: 100%;
+    }
+    #scannerVideo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .scan-frame {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 72%;
+      height: 36%;
+      border-radius: 10px;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    /* Corner accents */
+    .scan-frame::before, .scan-frame::after,
+    .scan-frame-inner::before, .scan-frame-inner::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-color: var(--hot-pink);
+      border-style: solid;
+    }
+    .scan-frame::before  { top: 0; left: 0;  border-width: 3px 0 0 3px; border-radius: 6px 0 0 0; }
+    .scan-frame::after   { top: 0; right: 0; border-width: 3px 3px 0 0; border-radius: 0 6px 0 0; }
+    .scan-frame-inner::before { bottom: 0; left: 0;  border-width: 0 0 3px 3px; border-radius: 0 0 0 6px; }
+    .scan-frame-inner::after  { bottom: 0; right: 0; border-width: 0 3px 3px 0; border-radius: 0 0 6px 0; }
+    .scan-line {
+      position: absolute;
+      left: 4px; right: 4px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--hot-pink), transparent);
+      box-shadow: 0 0 10px var(--hot-pink), 0 0 20px rgba(255,20,147,0.4);
+      animation: scanMove 1.8s ease-in-out infinite;
+      border-radius: 2px;
+    }
+    @keyframes scanMove {
+      0%   { top: 4px;  opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 1; }
+      100% { top: calc(100% - 6px); opacity: 0; }
+    }
+    .camera-status {
+      text-align: center;
+      margin-top: 18px;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.65);
+      font-family: 'Inter', sans-serif;
+      min-height: 1.2em;
+    }
+    .camera-status.detected {
+      color: var(--hot-pink);
+      font-weight: 600;
+    }
+    .camera-no-support {
+      text-align: center;
+      padding: 40px 20px;
+      color: white;
+    }
+    .camera-no-support p { color: rgba(255,255,255,0.6); margin-top: 10px; font-size:0.9rem; }
+
     /* ── Loading spinner ────────────────────────────────────────── */
     .loading-wrap {
       display: flex; flex-direction: column;
@@ -660,6 +792,9 @@
   <div class="glass scanner-card">
     <label class="scanner-label" for="barcodeInput">Scan or enter a product barcode</label>
     <div class="scanner-input-wrap">
+      <button class="btn-camera" id="cameraBtn" onclick="startCameraScanner()" title="Scan with camera" aria-label="Open camera to scan barcode">
+        📷
+      </button>
       <input
         id="barcodeInput"
         class="scanner-input"
@@ -682,6 +817,25 @@
     </p>
   </div>
 </section>
+
+<!-- ── Camera overlay ── -->
+<div class="camera-overlay hidden" id="cameraOverlay" role="dialog" aria-modal="true" aria-label="Barcode scanner">
+  <div class="camera-modal">
+    <div class="camera-header">
+      <span class="camera-title">✦ Scan Barcode</span>
+      <button class="btn-camera-close" onclick="stopCamera()" aria-label="Close camera">✕</button>
+    </div>
+    <div class="camera-viewport" id="cameraViewport">
+      <video id="scannerVideo" playsinline autoplay muted></video>
+      <div class="scan-frame" id="scanFrame">
+        <div class="scan-frame-inner">
+          <div class="scan-line"></div>
+        </div>
+      </div>
+    </div>
+    <p class="camera-status" id="cameraStatus">Hold camera steady over a barcode…</p>
+  </div>
+</div>
 
 <!-- ── Demo notice (shown when no API) ── -->
 <div class="demo-banner hidden" id="demoBanner">
@@ -1005,6 +1159,122 @@
   // Allow Enter key
   document.getElementById('barcodeInput')
     .addEventListener('keydown', e => { if (e.key === 'Enter') runScan(); });
+
+  /* ── Camera / Barcode Scanner ────────────────────────────────── */
+  let _cameraStream  = null;
+  let _scanTimer     = null;
+  let _detector      = null;
+  let _lastDetected  = null;
+
+  async function startCameraScanner() {
+    // 1. Check BarcodeDetector support
+    if (!('BarcodeDetector' in window)) {
+      showCameraUnsupported();
+      return;
+    }
+
+    // 2. Show overlay immediately
+    const overlay = document.getElementById('cameraOverlay');
+    overlay.classList.remove('hidden');
+    setStatus('Starting camera…');
+
+    // 3. Init detector (lazy)
+    if (!_detector) {
+      try {
+        const supported = await BarcodeDetector.getSupportedFormats();
+        const formats = ['ean_13','ean_8','upc_a','upc_e','code_128','code_39','code_93','itf','codabar']
+          .filter(f => supported.includes(f));
+        _detector = new BarcodeDetector({ formats: formats.length ? formats : ['ean_13','upc_a'] });
+      } catch(e) {
+        _detector = new BarcodeDetector({ formats: ['ean_13','ean_8','upc_a','upc_e','code_128'] });
+      }
+    }
+
+    // 4. Request camera — prefer rear camera, fall back to any
+    try {
+      _cameraStream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: { ideal: 'environment' }, width: { ideal: 1920 }, height: { ideal: 1080 } }
+      });
+    } catch (err) {
+      if (err.name === 'NotAllowedError') {
+        setStatus('Camera permission denied. Please allow camera access and try again.');
+        return;
+      }
+      try {
+        // fallback: any camera
+        _cameraStream = await navigator.mediaDevices.getUserMedia({ video: true });
+      } catch (err2) {
+        setStatus('Could not access a camera on this device.');
+        return;
+      }
+    }
+
+    // 5. Attach stream to video element
+    const video = document.getElementById('scannerVideo');
+    video.srcObject = _cameraStream;
+    await video.play().catch(() => {});
+    setStatus('Hold camera steady over a barcode…');
+    _lastDetected = null;
+
+    // 6. Poll for barcodes every 250 ms
+    _scanTimer = setInterval(async () => {
+      if (!video.videoWidth) return; // not ready yet
+      try {
+        const results = await _detector.detect(video);
+        if (results.length > 0) {
+          const code = results[0].rawValue;
+          if (code === _lastDetected) return; // debounce same barcode
+          _lastDetected = code;
+
+          setStatus('✦ Found: ' + code, true);
+          // Short pause so user sees the flash, then close and scan
+          setTimeout(() => {
+            stopCamera();
+            document.getElementById('barcodeInput').value = code;
+            runScan();
+          }, 350);
+        }
+      } catch(_) {}
+    }, 250);
+  }
+
+  function stopCamera() {
+    if (_scanTimer)  { clearInterval(_scanTimer);  _scanTimer = null; }
+    if (_cameraStream) {
+      _cameraStream.getTracks().forEach(t => t.stop());
+      _cameraStream = null;
+    }
+    const video = document.getElementById('scannerVideo');
+    video.srcObject = null;
+    document.getElementById('cameraOverlay').classList.add('hidden');
+  }
+
+  function setStatus(msg, detected = false) {
+    const el = document.getElementById('cameraStatus');
+    el.textContent = msg;
+    el.className = 'camera-status' + (detected ? ' detected' : '');
+  }
+
+  function showCameraUnsupported() {
+    const overlay = document.getElementById('cameraOverlay');
+    const viewport = document.getElementById('cameraViewport');
+    viewport.innerHTML = `
+      <div class="camera-no-support">
+        <div style="font-size:2.5rem">📷</div>
+        <p style="color:white;font-weight:600;margin-top:12px">Camera scanning not supported</p>
+        <p>Please use Chrome or Safari 17+ on your device,<br>or type the barcode manually above.</p>
+      </div>`;
+    document.getElementById('scanFrame') && document.getElementById('scanFrame').remove();
+    overlay.classList.remove('hidden');
+  }
+
+  // Close overlay on backdrop click
+  document.getElementById('cameraOverlay').addEventListener('click', function(e) {
+    if (e.target === this) stopCamera();
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') stopCamera(); });
 
   /* ── Loading state ───────────────────────────────────────────── */
   function showLoading() {
